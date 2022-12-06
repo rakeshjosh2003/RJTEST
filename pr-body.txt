@@ -1,0 +1,7 @@
+Adds a 'Manage users' page which can load a list of users and display their data, and supports removing users from the list.
+
+Requirements for this feature:
+
+- Display the role and name for each user in a list.
+- Display a 'Delete' button next to each user, to remove them from the list.
+- Log to analytics whenever someone visits this page.

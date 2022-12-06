@@ -1,0 +1,27 @@
+.user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #e6ebf2;
+}
+
+/* User 'name' */
+.user span {
+    color: #0f111a;
+}
+
+/* User 'role' */
+.user span ~ span {
+    color: #5e6e8c;
+}
+
+.button {
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: #c92a2a;
+    color: #ffffff !important;
+    cursor: pointer;
+}

@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ManageUsersPage renders correctly 1`] = `
+<div>
+  <div
+    role="heading"
+    style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;"
+  >
+    User List
+  </div>
+  <div
+    class="user"
+    id="user-abcd"
+  >
+    <div>
+      <span>
+        Alex
+      </span>
+       - 
+      <span>
+        Admin
+      </span>
+    </div>
+    <div
+      class="button"
+    >
+      Delete user
+    </div>
+  </div>
+  <div
+    class="user"
+    id="user-efgh"
+  >
+    <div>
+      <span>
+        Erin
+      </span>
+       - 
+      <span>
+        Developer
+      </span>
+    </div>
+    <div
+      class="button"
+    >
+      Delete user
+    </div>
+  </div>
+  <div
+    class="user"
+    id="user-ijkh"
+  >
+    <div>
+      <span>
+        Isaac
+      </span>
+       - 
+      <span>
+        Developer
+      </span>
+    </div>
+    <div
+      class="button"
+    >
+      Delete user
+    </div>
+  </div>
+</div>
+`;
