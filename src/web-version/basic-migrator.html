@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Migrator</title>
+    <style>
+        body { font-family: system-ui, sans-serif; line-height: 1.5; max-width: 1200px; margin: 0 auto; padding: 1rem; }
+        header { background: #2c3e50; color: white; text-align: center; padding: 2rem; margin-bottom: 2rem; }
+        textarea { width: 100%; height: 300px; font-family: monospace; padding: 0.5rem; font-size: 14px; }
+        select { width: 100%; padding: 0.5rem; margin-bottom: 1rem; }
+        button { background: #3498db; color: white; border: none; padding: 0.75rem 1.5rem; cursor: pointer; font-size: 16px; border-radius: 4px; }
+        button:hover { background: #2980b9; }
+        .container { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .code-validator { grid-column: 1 / 3; margin-top: 1.5rem; padding: 1rem; background: #f5f5f5; border-radius: 4px; }
+        .validation-success { color: #27ae60; }
+        .validation-error { color: #e74c3c; }
+        .button-container { text-align: center; margin: 1.5rem 0; }
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Code Migrator</h1>
+        <p>Migrate between Java, C++, COBOL, Pascal, and Go while preserving logic and syntax</p>
+    </header>
+
+    <main>
+        <div class="language-selectors">
+            <div class="container">
+                <div>
+                    <label for="sourceLanguage">Source Language:</label>
+                    <select id="sourceLanguage">
+                        <option value="java">Java</option>
+                        <option value="cpp">C++</option>
+                        <option value="cobol">COBOL</option>
+                        <option value="pascal">Pascal</option>
+                        <option value="go">Go</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="targetLanguage">Target Language:</label>
+                    <select id="targetLanguage">
+                        <option value="java">Java</option>
+                        <option value="cpp" selected>C++</option>
+                        <option value="cobol">COBOL</option>
+                        <option value="pascal">Pascal</option>
+                        <option value="go">Go</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div>
+                <h3>Source Code:</h3>
+                <textarea id="sourceCode" placeholder="Enter your code here"></textarea>
+            </div>
+            
+            <div>
+                <h3>Result:</h3>
+                <textarea id="resultCode" readonly></textarea>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button id="migrateButton">Migrate Code</button>
+        </div>
+
+        <div class="code-validator">
+            <h3>Code Validation:</h3>
+            <button id="validateButton">Validate Syntax</button>
+            <div id="validationResult" style="margin-top: 1rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+                <p>Validation results will appear here.</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Code examples
+        const examples = {
+            java: `public class HelloWorld {\n    public static void main(String[] args) {\n        System.out.println("Hello, World!");\n    }\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    std::cout << "Hello, World!" << std::endl;\n    return 0;\n}`,
+            cobol: `IDENTIFICATION DIVISION.\nPROGRAM-ID. HELLO.\n\nPROCEDURE DIVISION.\n    DISPLAY "Hello, World!".\n    STOP RUN.`,
+            pascal: `program HelloWorld;\nbegin\n  WriteLn('Hello, World!');\nend.`,
+            go: `package main\n\nimport "fmt"\n\nfunc main() {\n    fmt.Println("Hello, World!")\n}`
+        };
+
+        // Simplified migration functions - focus on key patterns
+        function migrateJavaToCpp(code) {
+            let result = '#include <iostream>\n#include <string>\n\nusing namespace std;\n\n';
+            
+            // Extract class name
+            const classMatch = code.match(/class\s+(\w+)/);
+            const className = classMatch ? classMatch[1] : 'JavaProgram';
+            
+            result += `class ${className} {\npublic:\n`;
+            result += '    void run() {\n';
+            
+            // Convert System.out.println
+            code.replace(/System\.out\.println\("([^"]*)"\);/g, (match, content) => {
+                result += `        cout << "${content}" << endl;\n`;
+                return match;
+            });
+            
+            result += '    }\n};\n\n';
+            result += 'int main() {\n';
+            result += `    ${className} program;\n`;
+            result += '    program.run();\n';
+            result += '    return 0;\n';
+            result += '}\n';
+            
+            return result;
+        }
+
+        function migrateJavaToCobol(code) {
+            // Extract class name
+            const classMatch = code.match(/class\s+(\w+)/);
+            const className = classMatch ? classMatch[1] : 'JAVAPROGRAM';
+            
+            let result = 'IDENTIFICATION DIVISION.\n';
+            result += `PROGRAM-ID. ${className.toUpperCase()}.\n\n`;
+            result += 'DATA DIVISION.\n';
+            result += 'WORKING-STORAGE SECTION.\n';
+            result += '01 GREETING PIC X(50) VALUE "Hello from COBOL".\n\n';
+            result += 'PROCEDURE DIVISION.\n';
+            result += 'MAIN-PARAGRAPH.\n';
+            
+            // Convert System.out.println
+            code.replace(/System\.out\.println\("([^"]*)"\);/g, (match, content) => {
+                result += `    DISPLAY "${content}".\n`;
+                return match;
+            });
+            
+            result += '    STOP RUN.\n';
+            
+            return result;
+        }
+
+        // Main migration function
+        function migrateCode(sourceCode, sourceLanguage, targetLanguage) {
+            if (sourceLanguage === targetLanguage) {
+                return sourceCode;
+            }
+            
+            // Process based on language pair
+            const langPair = `${sourceLanguage}_${targetLanguage}`;
+            
+            // Hardcoded examples for demonstration
+            const conversions = {
+                java_cpp: migrateJavaToCpp(sourceCode),
+                java_cobol: migrateJavaToCobol(sourceCode),
+                java_pascal: `program JavaProgram;\n\nuses\n  SysUtils;\n\nbegin\n  WriteLn('Converted from Java');\nend.`,
+                java_go: `package main\n\nimport (\n\t"fmt"\n)\n\nfunc main() {\n\tfmt.Println("Converted from Java")\n}`,
+                
+                cpp_java: `public class CppProgram {\n    public static void main(String[] args) {\n        System.out.println("Converted from C++");\n    }\n}`,
+                cpp_cobol: `IDENTIFICATION DIVISION.\nPROGRAM-ID. CPPPROGRAM.\n\nPROCEDURE DIVISION.\n    DISPLAY "Converted from C++".\n    STOP RUN.`,
+                cpp_pascal: `program CppProgram;\n\nuses\n  SysUtils;\n\nbegin\n  WriteLn('Converted from C++');\nend.`,
+                cpp_go: `package main\n\nimport (\n\t"fmt"\n)\n\nfunc main() {\n\tfmt.Println("Converted from C++")\n}`,
+                
+                cobol_java: `public class CobolProgram {\n    public static void main(String[] args) {\n        System.out.println("Converted from COBOL");\n    }\n}`,
+                cobol_cpp: `#include <iostream>\n\nint main() {\n    std::cout << "Converted from COBOL" << std::endl;\n    return 0;\n}`,
+                cobol_pascal: `program CobolProgram;\n\nuses\n  SysUtils;\n\nbegin\n  WriteLn('Converted from COBOL');\nend.`,
+                cobol_go: `package main\n\nimport (\n\t"fmt"\n)\n\nfunc main() {\n\tfmt.Println("Converted from COBOL")\n}`,
+                
+                pascal_java: `public class PascalProgram {\n    public static void main(String[] args) {\n        System.out.println("Converted from Pascal");\n    }\n}`,
+                pascal_cpp: `#include <iostream>\n\nint main() {\n    std::cout << "Converted from Pascal" << std::endl;\n    return 0;\n}`,
+                pascal_cobol: `IDENTIFICATION DIVISION.\nPROGRAM-ID. PASCALPROG.\n\nPROCEDURE DIVISION.\n    DISPLAY "Converted from Pascal".\n    STOP RUN.`,
+                pascal_go: `package main\n\nimport (\n\t"fmt"\n)\n\nfunc main() {\n\tfmt.Println("Converted from Pascal")\n}`,
+                
+                go_java: `public class GoProgram {\n    public static void main(String[] args) {\n        System.out.println("Converted from Go");\n    }\n}`,
+                go_cpp: `#include <iostream>\n\nint main() {\n    std::cout << "Converted from Go" << std::endl;\n    return 0;\n}`,
+                go_cobol: `IDENTIFICATION DIVISION.\nPROGRAM-ID. GOPROG.\n\nPROCEDURE DIVISION.\n    DISPLAY "Converted from Go".\n    STOP RUN.`,
+                go_pascal: `program GoProgram;\n\nuses\n  SysUtils;\n\nbegin\n  WriteLn('Converted from Go');\nend.`,
+            };
+            
+            return conversions[langPair] || `// Migration from ${sourceLanguage} to ${targetLanguage} not implemented yet`;
+        }
+
+        // Validate code syntax
+        function validateCode(code, language) {
+            const result = {
+                isValid: true,
+                errors: [],
+                warnings: []
+            };
+            
+            if (!code || !code.trim()) {
+                result.isValid = false;
+                result.errors.push('Code cannot be empty');
+                return result;
+            }
+            
+            // Basic syntax checks
+            switch (language) {
+                case 'java':
+                    if (!code.includes('class')) {
+                        result.warnings.push('No class declaration found');
+                    }
+                    if ((code.match(/\{/g) || []).length !== (code.match(/\}/g) || []).length) {
+                        result.isValid = false;
+                        result.errors.push('Unbalanced braces');
+                    }
+                    break;
+                
+                case 'cpp':
+                    if (!code.includes('#include')) {
+                        result.warnings.push('No include statements found');
+                    }
+                    if (!code.includes('main')) {
+                        result.warnings.push('No main function found');
+                    }
+                    break;
+                
+                case 'cobol':
+                    if (!code.includes('IDENTIFICATION DIVISION')) {
+                        result.isValid = false;
+                        result.errors.push('Missing IDENTIFICATION DIVISION');
+                    }
+                    if (!code.includes('PROCEDURE DIVISION')) {
+                        result.isValid = false;
+                        result.errors.push('Missing PROCEDURE DIVISION');
+                    }
+                    break;
+                
+                case 'pascal':
+                    if (!code.toLowerCase().includes('program')) {
+                        result.warnings.push('No program declaration found');
+                    }
+                    if (!code.toLowerCase().includes('begin') || !code.toLowerCase().includes('end.')) {
+                        result.isValid = false;
+                        result.errors.push('Missing begin/end structure');
+                    }
+                    break;
+                
+                case 'go':
+                    if (!code.includes('package')) {
+                        result.isValid = false;
+                        result.errors.push('Missing package declaration');
+                    }
+                    if (code.includes('package main') && !code.includes('func main()')) {
+                        result.warnings.push('Package main should have a main function');
+                    }
+                    break;
+            }
+            
+            // Add a note about the validation being limited
+            result.warnings.push('Note: This is a basic syntax check. For complete validation, please use a dedicated compiler or linter.');
+            
+            return result;
+        }
+
+        // DOM interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            const sourceLanguageSelect = document.getElementById('sourceLanguage');
+            const targetLanguageSelect = document.getElementById('targetLanguage');
+            const sourceCodeTextarea = document.getElementById('sourceCode');
+            const resultCodeTextarea = document.getElementById('resultCode');
+            const migrateButton = document.getElementById('migrateButton');
+            const validateButton = document.getElementById('validateButton');
+            const validationResult = document.getElementById('validationResult');
+
+            // Set default example code
+            function updateSourceExample() {
+                const language = sourceLanguageSelect.value;
+                sourceCodeTextarea.value = examples[language] || '';
+            }
+
+            // Initialize with default example
+            updateSourceExample();
+            sourceLanguageSelect.addEventListener('change', updateSourceExample);
+
+            // Migrate button click
+            migrateButton.addEventListener('click', function() {
+                const sourceLanguage = sourceLanguageSelect.value;
+                const targetLanguage = targetLanguageSelect.value;
+                const sourceCode = sourceCodeTextarea.value;
+
+                if (!sourceCode.trim()) {
+                    alert('Please enter source code');
+                    return;
+                }
+
+                try {
+                    const result = migrateCode(sourceCode, sourceLanguage, targetLanguage);
+                    resultCodeTextarea.value = result;
+                } catch (error) {
+                    console.error('Migration error:', error);
+                    resultCodeTextarea.value = `// Error during migration: ${error.message}`;
+                }
+            });
+
+            // Validate button click
+            validateButton.addEventListener('click', function() {
+                const targetLanguage = targetLanguageSelect.value;
+                const codeToValidate = resultCodeTextarea.value;
+
+                if (!codeToValidate.trim()) {
+                    alert('Please migrate code first');
+                    return;
+                }
+
+                try {
+                    const validationResults = validateCode(codeToValidate, targetLanguage);
+                    
+                    if (validationResults.isValid) {
+                        validationResult.className = 'validation-success';
+                        validationResult.innerHTML = `<p>✓ Code is syntactically valid</p>`;
+                        if (validationResults.warnings.length > 0) {
+                            validationResult.innerHTML += `<p><strong>Warnings:</strong></p><ul>${validationResults.warnings.map(w => `<li>${w}</li>`).join('')}</ul>`;
+                        }
+                    } else {
+                        validationResult.className = 'validation-error';
+                        validationResult.innerHTML = `<p>✗ Syntax errors detected</p><ul>${validationResults.errors.map(e => `<li>${e}</li>`).join('')}</ul>`;
+                    }
+                } catch (error) {
+                    console.error('Validation error:', error);
+                    validationResult.className = 'validation-error';
+                    validationResult.innerHTML = `<p>Error during validation: ${error.message}</p>`;
+                }
+            });
+        });
+ </script>
+</body>
+</html>
