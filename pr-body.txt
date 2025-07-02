@@ -1,7 +1,10 @@
-Adds a 'Manage users' page which can load a list of users and display their data, and supports removing users from the list.
+This PR adds the Code Migrator web application with the following features:
 
-Requirements for this feature:
+- Language migration between Java, C++, COBOL, Pascal, and Go
+- Language-specific parsers that convert code to AST
+- Language-specific generators that convert AST to target language
+- Syntax validation for migrated code
+- Web interface for easy access
+- Ready for deployment to Netlify or other hosting platforms
 
-- Display the role and name for each user in a list.
-- Display a 'Delete' button next to each user, to remove them from the list.
-- Log to analytics whenever someone visits this page.
+The implementation is designed to be self-contained with no external dependencies and can run directly in modern browsers.

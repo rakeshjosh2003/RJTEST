@@ -1,24 +1,7 @@
-export const deleteUser = (id) => Promise.resolve()
+// CodeMigrator app entry point
 
-export const getUsers = () =>
-    Promise.resolve([
-        {
-            id: 'abcd',
-            name: 'Alex',
-            role: 'Admin',
-        },
-        {
-            id: 'efgh',
-            name: 'Erin',
-            role: 'Developer',
-        },
-        {
-            id: 'ijkh',
-            name: 'Isaac',
-            role: 'Developer',
-        },
-    ])
+import React from 'react';
+import { AppRegistry } from 'react-native';
+import App from './App';
 
-export const analytics = {
-    log: (event) => Promise.resolve(),
-}
+AppRegistry.registerComponent('CodeMigrator', () => App);

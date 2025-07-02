@@ -1,2 +1,16 @@
+# Ignore built files
+dist
+build
+
+# Ignore all markdown files
+*.md
+
+# Ignore JSON files
+*.json
+
+# Ignore HTML files (optional, sometimes you want to format HTML)
+# *.html
+
+# Ignore specific directories
 node_modules
-package-lock.json
+.netlify

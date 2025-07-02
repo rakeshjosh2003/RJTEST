@@ -1,0 +1,13 @@
+# Netlify configuration file
+
+[build]
+  # Directory to publish
+  publish = "src"
+  # Default build command
+  command = "# No build required"
+
+# Redirects for SPA (Single Page Application)
+[[redirects]]
+  from = "/*"
+  to = "/web-version/index.html"
+  status = 200

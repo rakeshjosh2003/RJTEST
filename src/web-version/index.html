@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Migrator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Code Migrator</h1>
+        <p>Migrate between Java, C++, COBOL, Pascal, and Go while preserving logic and syntax</p>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="language-selectors">
+                <div class="language-selector">
+                    <label for="sourceLanguage">Source Language:</label>
+                    <select id="sourceLanguage">
+                        <option value="java">Java</option>
+                        <option value="cpp">C++</option>
+                        <option value="cobol">COBOL</option>
+                        <option value="pascal">Pascal</option>
+                        <option value="go">Go</option>
+                    </select>
+                </div>
+                
+                <div class="language-selector">
+                    <label for="targetLanguage">Target Language:</label>
+                    <select id="targetLanguage">
+                        <option value="java">Java</option>
+                        <option value="cpp" selected>C++</option>
+                        <option value="cobol">COBOL</option>
+                        <option value="pascal">Pascal</option>
+                        <option value="go">Go</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="code-container">
+                <div class="code-editor">
+                    <h3>Source Code:</h3>
+                    <textarea id="sourceCode" placeholder="Enter your code here"></textarea>
+                </div>
+                
+                <div class="button-container">
+                    <button id="migrateButton">Migrate Code</button>
+                </div>
+                
+                <div class="code-editor">
+                    <h3>Result:</h3>
+                    <textarea id="resultCode" readonly></textarea>
+                </div>
+            </div>
+
+            <div class="code-validator">
+                <h3>Code Validation:</h3>
+                <button id="validateButton">Validate Syntax</button>
+                <div id="validationResult" class="validation-result">
+                    <p>Validation results will appear here.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Code Migrator - Web Version</p>
+    </footer>
+
+    <!-- Load module shim first to make modules available globally -->
+    <script src="moduleShim.js" type="module"></script>
+    
+    <!-- Load app.js as regular script after modules are ready -->
+    <script>
+        // Wait for modules to be loaded
+        window.addEventListener('DOMContentLoaded', function() {
+            // Example code templates for each language
+            const codeExamples = {
+                java: `public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}`,
+                cpp: `#include <iostream>
+
+int main() {
+    std::cout << "Hello, World!" << std::endl;
+    return 0;
+}`,
+                cobol: `IDENTIFICATION DIVISION.
+PROGRAM-ID. HELLO.
+
+PROCEDURE DIVISION.
+    DISPLAY "Hello, World!".
+    STOP RUN.`,
+                pascal: `program HelloWorld;
+begin
+  WriteLn('Hello, World!');
+end.`,
+                go: `package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, World!")
+}`
+            };
+
+            const sourceLanguageSelect = document.getElementById('sourceLanguage');
+            const targetLanguageSelect = document.getElementById('targetLanguage');
+            const sourceCodeTextarea = document.getElementById('sourceCode');
+            const resultCodeTextarea = document.getElementById('resultCode');
+            const migrateButton = document.getElementById('migrateButton');
+            const validateButton = document.getElementById('validateButton');
+            const validationResult = document.getElementById('validationResult');
+
+            // Set default example code based on selected source language
+            sourceLanguageSelect.addEventListener('change', () => {
+                const language = sourceLanguageSelect.value;
+                sourceCodeTextarea.value = codeExamples[language] || '';
+            });
+
+            // Initialize with default example
+            sourceCodeTextarea.value = codeExamples[sourceLanguageSelect.value] || '';
+
+            // Handle migration button click
+            migrateButton.addEventListener('click', () => {
+                const sourceLanguage = sourceLanguageSelect.value;
+                const targetLanguage = targetLanguageSelect.value;
+                const sourceCode = sourceCodeTextarea.value;
+
+                if (!sourceCode.trim()) {
+                    alert('Please enter source code');
+                    return;
+                }
+
+                try {
+                    const result = window.CodeMigratorModules.migrateCode(sourceCode, sourceLanguage, targetLanguage);
+                    resultCodeTextarea.value = result;
+                } catch (error) {
+                    console.error('Migration error:', error);
+                    resultCodeTextarea.value = `Error during migration: ${error.message}`;
+                }
+            });
+
+            // Handle validate button click
+            validateButton.addEventListener('click', () => {
+                const targetLanguage = targetLanguageSelect.value;
+                const codeToValidate = resultCodeTextarea.value;
+
+                if (!codeToValidate.trim()) {
+                    alert('Please migrate code first');
+                    return;
+                }
+
+                try {
+                    const validationResults = window.CodeMigratorModules.validateCode(codeToValidate, targetLanguage);
+                    
+                    if (validationResults.isValid) {
+                        validationResult.className = 'validation-result validation-success';
+                        validationResult.innerHTML = `<p>✓ Code is syntactically valid</p>`;
+                        if (validationResults.warnings.length > 0) {
+                            validationResult.innerHTML += `<p><strong>Warnings:</strong></p><ul>${validationResults.warnings.map(w => `<li>${w}</li>`).join('')}</ul>`;
+                        }
+                    } else {
+                        validationResult.className = 'validation-result validation-error';
+                        validationResult.innerHTML = `<p>✗ Syntax errors detected</p><ul>${validationResults.errors.map(e => `<li>${e}</li>`).join('')}</ul>`;
+                    }
+                } catch (error) {
+                    console.error('Validation error:', error);
+                    validationResult.className = 'validation-result validation-error';
+                    validationResult.innerHTML = `<p>Error during validation: ${error.message}</p>`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
