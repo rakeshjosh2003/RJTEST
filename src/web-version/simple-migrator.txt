@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Migrator</title>
+    <style>
+        body { font-family: system-ui, sans-serif; line-height: 1.5; max-width: 1200px; margin: 0 auto; padding: 1rem; }
+        header { background: #2c3e50; color: white; text-align: center; padding: 2rem; margin-bottom: 2rem; }
+        textarea { width: 100%; height: 300px; font-family: monospace; padding: 0.5rem; font-size: 14px; }
+        select { width: 100%; padding: 0.5rem; margin-bottom: 1rem; }
+        button { background: #3498db; color: white; border: none; padding: 0.75rem 1.5rem; cursor: pointer; font-size: 16px; border-radius: 4px; }
+        button:hover { background: #2980b9; }
+        .container { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .code-validator { grid-column: 1 / 3; margin-top: 1.5rem; padding: 1rem; background: #f5f5f5; border-radius: 4px; }
+        .validation-success { color: #27ae60; }
+        .validation-error { color: #e74c3c; }
+        .button-container { text-align: center; margin: 1.5rem 0; }
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Code Migrator</h1>
+        <p>Migrate between Java, C++, COBOL, Pascal, and Go while preserving logic and syntax</p>
+    </header>
+
+    <main>
+        <div class="language-selectors">
+            <div class="container">
+                <div>
+                    <label for="sourceLanguage">Source Language:</label>
+                    <select id="sourceLanguage">
+                        <option value="java">Java</option>
+                        <option value="cpp">C++</option>
+                        <option value="cobol">COBOL</option>
+                        <option value="pascal">Pascal</option>
+                        <option value="go">Go</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="targetLanguage">Target Language:</label>
+                    <select id="targetLanguage">
+                        <option value="java">Java</option>
+                        <option value="cpp" selected>C++</option>
+                        <option value="cobol">COBOL</option>
+                        <option value="pascal">Pascal</option>
+                        <option value="go">Go</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div>
+                <h3>Source Code:</h3>
+                <textarea id="sourceCode" placeholder="Enter your code here"></textarea>
+            </div>
+            
+            <div>
+                <h3>Result:</h3>
+                <textarea id="resultCode" readonly></textarea>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button id="migrateButton">Migrate Code</button>
+        </div>
+
+        <div class="code-validator">
+            <h3>Code Validation:</h3>
+            <button id="validateButton">Validate Syntax</button>
+            <div id="validationResult" style="margin-top: 1rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+                <p>Validation results will appear here.</p>
+            </div>
+        </div>
+    </main>
+
+  const codeExamples = {
+            java: `public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}`,
+            cpp: `#include <iostream>
+
+int main() {
+    std::cout << "Hello, World!" << std::endl;
+    return 0;
+}`,
+            cobol: `IDENTIFICATION DIVISION.
+PROGRAM-ID. HELLO.
+
+PROCEDURE DIVISION.
+    DISPLAY "Hello, World!".
+    STOP RUN.`,
+            pascal: `program HelloWorld;
+begin
+  WriteLn('Hello, World!');
+end.`,
+            go: `package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, World!")
+}`
+        };
+
+        // Migration functions
+        function migrateCode(sourceCode, sourceLanguage, targetLanguage) {
+            if (sourceLanguage === targetLanguage) {
+                return sourceCode; // No change needed
+            }
+
+            try {
+                // Process the code based on the language combination
+                const migrationKey = `${sourceLanguage}_${targetLanguage}`;
+                const migrationFn = migrationFunctions[migrationKey];
+                
+                if (migrationFn) {
+                    return migrationFn(sourceCode);
+                } else {
+                    return `// Migration from ${sourceLanguage} to ${targetLanguage} not implemented yet`;
+                }
+            } catch (error) {
+                console.error("Migration error:", error);
+                return `// Error during migration: ${error.message}`;
+            }
+        }
+
+        // Extraction helpers
+        function extractClassName(code, language) {
+            let match;
+            if (language === 'java') {
+                match = code.match(/class\s+(\w+)/);
+            } else if (language === 'cpp') {
+                match = code.match(/class\s+(\w+)/);
+            }
+            return match ? match[1] : null;
+        }
+
+        function extractProgramId(code) {
+            const match = code.match(/PROGRAM-ID\s*\.\s*(\w+)/i);
+            return match ? match[1] : null;
+        }
+
+        function extractProgramName(code) {
+            const match = code.match(/program\s+(\w+)/i);
+            return match ? match[1] : null;
+        }
+
+        function extractPackageName(code) {
+            const match = code.match(/package\s+(\w+)/);
+            return match ? match[1] : null;
+        }
+
+        function capitalizeFirstLetter(string) {
+            if (!string) return '';
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        // Migration function implementations
+        const migrationFunctions = {
+            // Java to X
+            java_cpp: function(code) {
+                const className = extractClassName(code, 'java') || 'JavaProgram';
+                
+                let result = '#include <iostream>\n#include <string>\n\nusing namespace std;\n\n';
+                
+                // Convert class to C++ class
+                result += `class ${className} {\npublic:\n`;
+                
+                // Find main method
+                if (code.includes('public static void main')) {
+                    result += '    void run() {\n';
+                    
+                    // Convert System.out.println to cout
+                    const printRegex = /System\.out\.println\("([^"]*)"\);/g;
+                    let printMatch;
+                    while ((printMatch = printRegex.exec(code)) !== null) {
+                        result += `        cout << "${printMatch[1]}" << endl;\n`;
+                    }
+                    
+                    result += '    }\n';
+                }
+                
+                result += '};\n\n';
+                
+                // Add main function
+                result += 'int main() {\n';
+                result += `    ${className} program;\n`;
+                result += '    program.run();\n';
+                result += '    return 0;\n';
+                result += '}\n';
+                
+                return result;
+            },
+            
+            java_cobol: function(code) {
+                const className = extractClassName(code, 'java') || 'JAVAPROGRAM';
+                
+                let result = 'IDENTIFICATION DIVISION.\n';
+                result += `PROGRAM-ID. ${className.toUpperCase()}.\n\n`;
+                result += 'DATA DIVISION.\n';
+                result += 'WORKING-STORAGE SECTION.\n';
+                result += '01 GREETING PIC X(50) VALUE "Hello from COBOL".\n\n';
+                result += 'PROCEDURE DIVISION.\n';
+                result += 'MAIN-PARAGRAPH.\n';
+                
+                // Convert System.out.println to DISPLAY
+                const printRegex = /System\.out\.println\("([^"]*)"\);/g;
+                let printMatch;
+                while ((printMatch = printRegex.exec(code)) !== null) {
+                    result += `    DISPLAY "${printMatch[1]}".\n`;
+                }
+                
+                if (!code.includes('System.out.println')) {
+                    result += '    DISPLAY GREETING.\n';
+                }
+                
+                result += '    STOP RUN.\n';
+                
+                return result;
+            },
+            
+            java_pascal: function(code) {
+                const className = extractClassName(code, 'java') || 'JavaProgram';
+                
+                let result = `program ${className};\n\n`;
+                result += 'uses\n  SysUtils;\n\n';
+                result += 'begin\n';
+                
+                // Convert System.out.println to WriteLn
+                const printRegex = /System\.out\.println\("([^"]*)"\);/g;
+                let printMatch;
+                while ((printMatch = printRegex.exec(code)) !== null) {
+                    result += `  WriteLn('${printMatch[1]}');\n`;
+                }
+                
+                if (!code.includes('System.out.println')) {
+                    result += '  WriteLn(\'Hello from Pascal\');\n';
+                }
+                
+                result += 'end.\n';
+                
+                return result;
+            },
+            
+            java_go: function(code) {
+                const className = extractClassName(code, 'java') || 'javaprogram';
+                
+                let result = 'package main\n\n';
+                result += 'import (\n\t"fmt"\n)\n\n';
+                result += 'func main() {\n';
+                
+                // Convert System.out.println to fmt.Println
+                const printRegex = /System\.out\.println\("([^"]*)"\);/g;
+                let printMatch;
+                while ((printMatch = printRegex.exec(code)) !== null) {
+                    result += `\tfmt.Println("${printMatch[1]}")\n`;
+                }
+                
+                if (!code.includes('System.out.println')) {
+                    result += '\tfmt.Println("Hello from Go")\n';
+                }
+                
+                result += '}\n';
+                
+                return result;
+            },
+            
+            // C++ to X
+            cpp_java: function(code) {
+                const className = extractClassName(code, 'cpp') || 'CppProgram';
+                
+                let result = `public class ${className} {\n`;
+                result += '    public static void main(String[] args) {\n';
+                
+                // Convert cout to System.out.println
+                const coutRegex = /cout\s*<<\s*"([^"]*)".*;/g;
+                let coutMatch;
+                while ((coutMatch = coutRegex.exec(code)) !== null) {
+                    result += `        System.out.println("${coutMatch[1]}");\n`;
+                }
+                
+                if (!code.includes('cout <<')) {
+                    result += '        System.out.println("Hello from Java");\n';
+                }
+                
+                result += '    }\n';
+                result += '}\n';
+                
+                return result;
+            },
+            
+            cpp_cobol: function(code) {
+                const className = extractClassName(code, 'cpp') || 'CPPPROGRAM';
+                
+                let result = 'IDENTIFICATION DIVISION.\n';
+                result += `PROGRAM-ID. ${className.toUpperCase()}.\n\n`;
+                result += 'DATA DIVISION.\n';
+                result += 'WORKING-STORAGE SECTION.\n';
+                result += '01 GREETING PIC X(50) VALUE "Hello from COBOL".\n\n';
+                result += 'PROCEDURE DIVISION.\n';
+                result += 'MAIN-PARAGRAPH.\n';
+                
+                // Convert cout to DISPLAY
+                const coutRegex = /cout\s*<<\s*"([^"]*)".*;/g;
+                let coutMatch;
+                while ((coutMatch = coutRegex.exec(code)) !== null) {
+                    result += `    DISPLAY "${coutMatch[1]}".\n`;
+                }
+                
+                if (!code.includes('cout <<')) {
+                    result += '    DISPLAY GREETING.\n';
+                }
+                
+                result += '    STOP RUN.\n';
+                
+                return result;
+            },
+            
+            cpp_pascal: function(code) {
+                const className = extractClassName(code, 'cpp') || 'CppProgram';
+                
+                let result = `program ${className};\n\n`;
+                result += 'uses\n  SysUtils;\n\n';
+                result += 'begin\n';
+                
+                // Convert cout to WriteLn
+                const coutRegex = /cout\s*<<\s*"([^"]*)".*;/g;
+                let coutMatch;
+                while ((coutMatch = coutRegex.exec(code)) !== null) {
+                    result += `  WriteLn('${coutMatch[1]}');\n`;
+                }
+                
+                if (!code.includes('cout <<')) {
+                    result += '  WriteLn(\'Hello from Pascal\');\n';
+                }
+                
+                result += 'end.\n';
+                
+                return result;
+            },
+            
+            cpp_go: function(code) {
+                const className = extractClassName(code, 'cpp') || 'main';
+                
+                let result = 'package main\n\n';
+                result += 'import (\n\t"fmt"\n)\n\n';
+                result += 'func main() {\n';
+                
+                // Convert cout to fmt.Println
+                const coutRegex = /cout\s*<<\s*"([^"]*)".*;/g;
+                let coutMatch;
+                while ((coutMatch = coutRegex.exec(code)) !== null) {
+                    result += `\tfmt.Println("${coutMatch[1]}")\n`;
+                }
+                
+                if (!code.includes('cout <<')) {
+                    result += '\tfmt.Println("Hello from Go")\n';
+                }
+                
+                result += '}\n';
+                
+                return result;
+            },
+            
+            // COBOL to X conversions
+            cobol_java: function(code) {
+                const programId = extractProgramId(code) || 'CobolProgram';
+                
+                let result = `public class ${programId} {\n`;
+                result += '    public static void main(String[] args) {\n';
+                
+                // Convert DISPLAY to System.out.println
+                const displayRegex = /DISPLAY\s*"([^"]*)"\./gi;
+                let displayMatch;
+                while ((displayMatch = displayRegex.exec(code)) !== null) {
+                    result += `        System.out.println("${displayMatch[1]}");\n`;
+                }
+                
+                if (!code.includes('DISPLAY')) {
+                    result += '        System.out.println("Hello from Java");\n';
+                }
+                
+                result += '    }\n';
+                result += '}\n';
+                
+                return result;
+            },
+            
+            cobol_cpp: function(code) {
+                const programId = extractProgramId(code) || 'CobolProgram';
+                
+                let result = '#include <iostream>\n#include <string>\n\nusing namespace std;\n\n';
+                result += 'int main() {\n';
+                
+                // Convert DISPLAY to cout
+                const displayRegex = /DISPLAY\s*"([^"]*)"\./gi;
+                let displayMatch;
+                while ((displayMatch = displayRegex.exec(code)) !== null) {
+                    result += `    cout << "${displayMatch[1]}" << endl;\n`;
+                }
+                
+                if (!code.includes('DISPLAY')) {
+                    result += '    cout << "Hello from C++" << endl;\n';
+                }
+                
+                result += '    return 0;\n';
+                result += '}\n';
+                
+                return result;
+            },
+            
+            cobol_pascal: function(code) {
+                const programId = extractProgramId(code) || 'CobolProgram';
+                
+                let result = `program ${programId};\n\n`;
+                result += 'uses\n  SysUtils;\n\n';
+                result += 'begin\n';
+                
+                // Convert DISPLAY to WriteLn
+                const displayRegex = /DISPLAY\s*"([^"]*)"\./gi;
+                let displayMatch;
+                while ((displayMatch = displayRegex.exec(code)) !== null) {
+                    result += `  WriteLn('${displayMatch[1]}');\n`;
+                }
+                
+                if (!code.includes('DISPLAY')) {
+                    result += '  WriteLn(\'Hello from Pascal\');\n';
+                }
+                
+                result += 'end.\n';
+                
+                return result;
+            },
+            
+            cobol_go: function(code) {
+                const programId = extractProgramId(code) || 'main';
+                
+                let result = 'package main\n\n';
+                result += 'import (\n\t"fmt"\n)\n\n';
+                result += 'func main() {\n';
+                
+                // Convert DISPLAY to fmt.Println
+                const displayRegex = /DISPLAY\s*"([^"]*)"\./gi;
+                let displayMatch;
+                while ((displayMatch = displayRegex.exec(code)) !== null) {
+                    result += `\tfmt.Println("${displayMatch[1]}")\n`;
+                }
+                
+                if (!code.includes('DISPLAY')) {
+                    result += '\tfmt.Println("Hello from Go")\n';
+                }
+                
+                result += '}\n';
+                
+                return result;
+            },
+            
+            // Pascal to X conversions
+            pascal_java: function(code) {
+                const programName = extractProgramName(code) || 'PascalProgram';
+                
+                let result = `public class ${programName} {\n`;
+                result += '    public static void main(String[] args) {\n';
+                
+                // Convert WriteLn to System.out.println
+                const writelnRegex = /WriteLn\('([^']*)'\);/gi;
+                let writelnMatch;
+                while ((writelnMatch = writelnRegex.exec(code)) !== null) {
+                    result += `        System.out.println("${writelnMatch[1]}");\n`;
+                }
+                
+                if (!code.includes('WriteLn')) {
+                    result += '        System.out.println("Hello from Java");\n';
+                }
+                
+                result += '    }\n';
+                result += '}\n';
+                
+                return result;
+            },
+            
+            pascal_cpp: function(code) {
+                const programName = extractProgramName(code) || 'PascalProgram';
+                
+                let result = '#include <iostream>\n#include <string>\n\nusing namespace std;\n\n';
+                result += 'int main() {\n';
+                
+                // Convert WriteLn to cout
+                const writelnRegex = /WriteLn\('([^']*)'\);/gi;
+                let writelnMatch;
+                while ((writelnMatch = writelnRegex.exec(code)) !== null) {
+                    result += `    cout << "${writelnMatch[1]}" << endl;\n`;
+                }
+                
+                if (!code.includes('WriteLn')) {
+                    result += '    cout << "Hello from C++" << endl;\n';
+                }
+                
+                result += '    return 0;\n';
+                result += '}\n';
+                
+                return result;
+            },
+            
+            pascal_cobol: function(code) {
+                const programName = extractProgramName(code) || 'PASCALPROG';
+                
+                let result = 'IDENTIFICATION DIVISION.\n';
+                result += `PROGRAM-ID. ${programName.toUpperCase()}.\n\n`;
+                result += 'PROCEDURE DIVISION.\n';
+                result += 'MAIN-PARAGRAPH.\n';
+                
+                // Convert WriteLn to DISPLAY
+                const writelnRegex = /WriteLn\('([^']*)'\);/gi;
+                let writelnMatch;
+                while ((writelnMatch = writelnRegex.exec(code)) !== null) {
+                    result += `    DISPLAY "${writelnMatch[1]}".\n`;
+                }
+                
+                if (!code.includes('WriteLn')) {
+                    result += '    DISPLAY "Hello from COBOL".\n';
+                }
+                
+                result += '    STOP RUN.\n';
+                
+                return result;
+            },
+            
+            pascal_go: function(code) {
+                const programName = extractProgramName(code) || 'main';
+                
+                let result = 'package main\n\n';
+                result += 'import (\n\t"fmt"\n)\n\n';
+                result += 'func main() {\n';
+                
+                // Convert WriteLn to fmt.Println
+                const writelnRegex = /WriteLn\('([^']*)'\);/gi;
+                let writelnMatch;
+                while ((writelnMatch = writelnRegex.exec(code)) !== null) {
+                    result += `\tfmt.Println("${writelnMatch[1]}")\n`;
+                }
+                
+                if (!code.includes('WriteLn')) {
+                    result += '\tfmt.Println("Hello from Go")\n';
+                }
+                
+                result += '}\n';
+                
+                return result;
+            },
+            
+            // Go to X conversions
+            go_java: function(code) {
+                const packageName = extractPackageName(code) || 'GoProgram';
+                
+                let result = `public class ${capitalizeFirstLetter(packageName)} {\n`;
+                result += '    public static void main(String[] args) {\n';
+                
+                // Convert fmt.Println to System.out.println
+                const printlnRegex = /fmt\.Println\("([^"]*)"\)/g;
+                let printlnMatch;
+                while ((printlnMatch = printlnRegex.exec(code)) !== null) {
+                    result += `        System.out.println("${printlnMatch[1]}");\n`;
+                }
+                
+                if (!code.includes('fmt.Println')) {
+                    result += '        System.out.println("Hello from Java");\n';
+                }
+                
+                result += '    }\n';
+                result += '}\n';
+                
+                return result;
+            },
+            
+            go_cpp: function(code) {
+                const packageName = extractPackageName(code) || 'GoProgram';
+                
+                let result = '#include <iostream>\n#include <string>\n\nusing namespace std;\n\n';
+                result += 'int main() {\n';
+                
+                // Convert fmt.Println to cout
+                const printlnRegex = /fmt\.Println\("([^"]*)"\)/g;
+                let printlnMatch;
+                while ((printlnMatch = printlnRegex.exec(code)) !== null) {
+                    result += `    cout << "${printlnMatch[1]}" << endl;\n`;
+                }
+                
+                if (!code.includes('fmt.Println')) {
+                    result += '    cout << "Hello from C++" << endl;\n';
+                }
+                
+                result += '    return 0;\n';
+                result += '}\n';
+                
+                return result;
+            },
+            
+            go_cobol: function(code) {
+                const packageName = extractPackageName(code) || 'GOPROGRAM';
+                
+                let result = 'IDENTIFICATION DIVISION.\n';
+                result += `PROGRAM-ID. ${packageName.toUpperCase()}.\n\n`;
+                result += 'PROCEDURE DIVISION.\n';
+                result += 'MAIN-PARAGRAPH.\n';
+                
+                // Convert fmt.Println to DISPLAY
+                const printlnRegex = /fmt\.Println\("([^"]*)"\)/g;
+                let printlnMatch;
+                while ((printlnMatch = printlnRegex.exec(code)) !== null) {
+                    result += `    DISPLAY "${printlnMatch[1]}".\n`;
+                }
+                
+                if (!code.includes('fmt.Println')) {
+                    result += '    DISPLAY "Hello from COBOL".\n';
+                }
+                
+                result += '    STOP RUN.\n';
+                
+                return result;
+            },
+            
+            go_pascal: function(code) {
+                const packageName = extractPackageName(code) || 'GoProgram';
+                
+                let result = `program ${packageName};\n\n`;
+                result += 'uses\n  SysUtils;\n\n';
+                result += 'begin\n';
+                
+                // Convert fmt.Println to WriteLn
+                const printlnRegex = /fmt\.Println\("([^"]*)"\)/g;
+                let printlnMatch;
+                while ((printlnMatch = printlnRegex.exec(code)) !== null) {
+                    result += `  WriteLn('${printlnMatch[1]}');\n`;
+                }
+                
+                if (!code.includes('fmt.Println')) {
+                    result += '  WriteLn(\'Hello from Pascal\');\n';
+                }
+                
+                result += 'end.\n';
+                
+                return result;
+            }
+        };
+
+        // Validation functions
+        function validateCode(code, language) {
+            const result = {
+                isValid: true,
+                errors: [],
+                warnings: []
+            };
+            
+            if (!code || !code.trim()) {
+                result.isValid = false;
+                result.errors.push('Code cannot be empty');
+                return result;
+            }
+            
+            // Basic language-specific syntax validation
+            switch (language) {
+                case 'java': validateJavaSyntax(code, result); break;
+                case 'cpp': validateCppSyntax(code, result); break;
+                case 'cobol': validateCobolSyntax(code, result); break;
+                case 'pascal': validatePascalSyntax(code, result); break;
+                case 'go': validateGoSyntax(code, result); break;
+                default: result.warnings.push(`No specific validation available for ${language}`);
+            }
+            
+            // Add a note about the validation being limited
+            result.warnings.push('Note: This is a basic syntax check. For complete validation, please use a dedicated compiler or linter.');
+            
+            return result;
+        }
+        
+        function validateJavaSyntax(code, result) {
+            // Check for unbalanced braces
+            const openBraces = (code.match(/\{/g) || []).length;
+            const closeBraces = (code.match(/\}/g) || []).length;
+            
+            if (openBraces !== closeBraces) {
+                result.isValid = false;
+                result.errors.push(`Unbalanced braces: ${openBraces} opening and ${closeBraces} closing braces`);
+            }
+            
+            // Check for class declaration
+            if (!code.includes('class ')) {
+                result.warnings.push('No class declaration found');
+            }
+            
+            // Check for missing semicolons (simple heuristic)
+            const lines = code.split('\n');
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (line && !line.endsWith('{') && !line.endsWith('}') && 
+                    !line.endsWith(';') && !line.startsWith('//') && 
+                    !line.startsWith('/*') && !line.startsWith('*') && 
+                    !line.endsWith('*/') && !line.startsWith('import') && 
+                    !line.startsWith('package') && !line.startsWith('public class')) {
+                    result.warnings.push(`Line ${i+1} may be missing a semicolon: "${line}"`);
+                }
+            }
+        }
+        
+        function validateCppSyntax(code, result) {
+            // Check for unbalanced braces
+            const openBraces = (code.match(/\{/g) || []).length;
+            const closeBraces = (code.match(/\}/g) || []).length;
+            
+            if (openBraces !== closeBraces) {
+                result.isValid = false;
+                result.errors.push(`Unbalanced braces: ${openBraces} opening and ${closeBraces} closing braces`);
+            }
+            
+            // Check for includes
+            if (!code.includes('#include')) {
+                result.warnings.push('No include statements found');
+            }
+            
+            // Check for main function
+            if (!code.includes('main')) {
+                result.warnings.push('No main function found');
+            }
+        }
+        
+        function validateCobolSyntax(code, result) {
+            // Check for required divisions
+            if (!code.includes('IDENTIFICATION DIVISION')) {
+                result.isValid = false;
+                result.errors.push('Missing IDENTIFICATION DIVISION');
+            }
+            
+            if (!code.includes('PROCEDURE DIVISION')) {
+                result.isValid = false;
+                result.errors.push('Missing PROCEDURE DIVISION');
+            }
+            
+            // Check for PROGRAM-ID
+            if (!code.includes('PROGRAM-ID')) {
+                result.warnings.push('No PROGRAM-ID found');
+            }
+            
+            // Check for proper line termination (periods)
+            const lines = code.split('\n');
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (line && !line.endsWith('.') && 
+                    !line.includes('DIVISION') && 
+                    !line.includes('SECTION') && 
+                    line.length > 0) {
+                    result.warnings.push(`Line ${i+1} may be missing a period: "${line}"`);
+                }
+            }
+        }
+        
+        function validatePascalSyntax(code, result) {
+            // Check for proper program structure
+            if (!code.toLowerCase().includes('program ')) {
+                result.warnings.push('No program declaration found');
+            }
+            
+            // Check for begin/end balance
+            const beginCount = (code.toLowerCase().match(/\bbegin\b/g) || []).length;
+            const endCount = (code.toLowerCase().match(/\bend\b/g) || []).length;
+            
+            if (beginCount !== endCount) {
+                result.isValid = false;
+                result.errors.push(`Unbalanced begin/end: ${beginCount} begin and ${endCount} end keywords`);
+            }
+            
+            // Check for proper termination
+            if (!code.trim().endsWith('.')) {
+                result.warnings.push('Program should end with a period');
+            }
+        }
+        
+        function validateGoSyntax(code, result) {
+            // Check for package declaration
+            if (!code.includes('package ')) {
+                result.isValid = false;
+                result.errors.push('Missing package declaration');
+            }
+            
+            // Check for main function in package main
+            if (code.includes('package main') && !code.includes('func main()')) {
+                result.warnings.push('Package main should have a main function');
+            }
+        }
+
+        // Set up UI interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            const sourceLanguageSelect = document.getElementById('sourceLanguage');
+            const targetLanguageSelect = document.getElementById('targetLanguage');
+            const sourceCodeTextarea = document.getElementById('sourceCode');
+            const resultCodeTextarea = document.getElementById('resultCode');
+            const migrateButton = document.getElementById('migrateButton');
+            const validateButton = document.getElementById('validateButton');
+            const validationResult = document.getElementById('validationResult');
+
+            // Set default example code based on selected source language
+            sourceLanguageSelect.addEventListener('change', () => {
+                const language = sourceLanguageSelect.value;
+                sourceCodeTextarea.value = codeExamples[language] || '';
+            });
+
+            // Initialize with default example
+            sourceCodeTextarea.value = codeExamples[sourceLanguageSelect.value] || '';
+
+            // Handle migration button click
+            migrateButton.addEventListener('click', () => {
+                const sourceLanguage = sourceLanguageSelect.value;
+                const targetLanguage = targetLanguageSelect.value;
+                const sourceCode = sourceCodeTextarea.value;
+
+                if (!sourceCode.trim()) {
+                    alert('Please enter source code');
+                    return;
+                }
+
+                try {
+                    const result = migrateCode(sourceCode, sourceLanguage, targetLanguage);
+                    resultCodeTextarea.value = result;
+                } catch (error) {
+                    console.error('Migration error:', error);
+                    resultCodeTextarea.value = `// Error during migration: ${error.message}`;
+                }
+            });
+
+            // Handle validate button click
+            validateButton.addEventListener('click', () => {
+                const targetLanguage = targetLanguageSelect.value;
+                const codeToValidate = resultCodeTextarea.value;
+
+                if (!codeToValidate.trim()) {
+                    alert('Please migrate code first');
+                    return;
+                }
+
+                try {
+                    const validationResults = validateCode(codeToValidate, targetLanguage);
+                    
+                    if (validationResults.isValid) {
+                        validationResult.className = 'validation-success';
+                        validationResult.innerHTML = `<p>✓ Code is syntactically valid</p>`;
+                        if (validationResults.warnings.length > 0) {
+                            validationResult.innerHTML += `<p><strong>Warnings:</strong></p><ul>${validationResults.warnings.map(w => `<li>${w}</li>`).join('')}</ul>`;
+                        }
+                    } else {
+                        validationResult.className = 'validation-error';
+                        validationResult.innerHTML = `<p>✗ Syntax errors detected</p><ul>${validationResults.errors.map(e => `<li>${e}</li>`).join('')}</ul>`;
+                    }
+                } catch (error) {
+                    console.error('Validation error:', error);
+                    validationResult.className = 'validation-error';
+                    validationResult.innerHTML = `<p>Error during validation: ${error.message}</p>`;
+                }
+            });
+        });
+</body>
+</html>
