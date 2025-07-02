@@ -1,0 +1,888 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.4px '.AppleSystemUIFontMonospaced'; -webkit-text-stroke: #000000; background-color: #181818}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.4px '.AppleSystemUIFontMonospaced'; color: #c1c1c1; -webkit-text-stroke: #c1c1c1; background-color: #181818}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.4px '.SF NS Mono'; color: #c1c1c1; -webkit-text-stroke: #c1c1c1; background-color: #181818}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.4px '.AppleSystemUIFontMonospaced'; color: #c1c1c1; -webkit-text-stroke: #c1c1c1; background-color: #181818; min-height: 12.0px}
+    span.s1 {font-kerning: none}
+    span.s2 {font: 10.4px '.AppleSystemUIFontMonospaced'; font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">&lt;!DOCTYPE <b>html</b>&gt;</span></p>
+<p class="p2"><span class="s1">&lt;<b>html</b> <i>lang</i>="en"&gt;</span></p>
+<p class="p3"><span class="s2">&lt;<b>head</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>&lt;<b>meta</b> <i>charset</i>="UTF-8"&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>&lt;<b>meta</b> <i>name</i>="viewport" <i>content</i>="width=device-width, initial-scale=1.0"&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>&lt;<b>title</b>&gt;Code Migrator&lt;/<b>title</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>&lt;<b>style</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span><b>body</b> { font-family: system-ui, sans-serif; line-height: 1.5; max-width: 1200px; margin: 0 auto; padding: 1rem; }</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span><b>header</b> { background: #2c3e50; color: white; text-align: center; padding: 2rem; margin-bottom: 2rem; }</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span><b>textarea</b> { width: 100%; height: 300px; font-family: monospace; padding: 0.5rem; font-size: 14px; }</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span><b>select</b> { width: 100%; padding: 0.5rem; margin-bottom: 1rem; }</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span><b>button</b> { background: #3498db; color: white; border: none; padding: 0.75rem 1.5rem; cursor: pointer; font-size: 16px; border-radius: 4px; }</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span><b>button</b>:hover { background: #2980b9; }</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.container { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.code-validator { grid-column: 1 / 3; margin-top: 1.5rem; padding: 1rem; background: #f5f5f5; border-radius: 4px; }</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.validation-success { color: #27ae60; }</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.validation-error { color: #e74c3c; }</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>.button-container { text-align: center; margin: 1.5rem 0; }</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span><b>@media</b> (max-width: 768px) { .container { grid-template-columns: 1fr; } }</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/<b>style</b>&gt;</span></p>
+<p class="p3"><span class="s2">&lt;/<b>head</b>&gt;</span></p>
+<p class="p3"><span class="s2">&lt;<b>body</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>&lt;<b>header</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>&lt;<b>h1</b>&gt;Code Migrator&lt;/<b>h1</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>&lt;<b>p</b>&gt;Migrate between Java, C++, COBOL, Pascal, and Go while preserving logic and syntax&lt;/<b>p</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/<b>header</b>&gt;</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>&lt;<b>main</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>&lt;<b>div</b> <i>class</i>="language-selectors"&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>&lt;<b>div</b> <i>class</i>="container"&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>&lt;<b>div</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;<b>label</b> <i>for</i>="sourceLanguage"&gt;Source Language:&lt;/<b>label</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;<b>select</b> <i>id</i>="sourceLanguage"&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;<b>option</b> <i>value</i>="java"&gt;Java&lt;/<b>option</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;<b>option</b> <i>value</i>="cpp"&gt;C++&lt;/<b>option</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;<b>option</b> <i>value</i>="cobol"&gt;COBOL&lt;/<b>option</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;<b>option</b> <i>value</i>="pascal"&gt;Pascal&lt;/<b>option</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;<b>option</b> <i>value</i>="go"&gt;Go&lt;/<b>option</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/<b>select</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/<b>div</b>&gt;</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>&lt;<b>div</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;<b>label</b> <i>for</i>="targetLanguage"&gt;Target Language:&lt;/<b>label</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;<b>select</b> <i>id</i>="targetLanguage"&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;<b>option</b> <i>value</i>="java"&gt;Java&lt;/<b>option</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;<b>option</b> <i>value</i>="cpp" <i>selected</i>&gt;C++&lt;/<b>option</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;<b>option</b> <i>value</i>="cobol"&gt;COBOL&lt;/<b>option</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;<b>option</b> <i>value</i>="pascal"&gt;Pascal&lt;/<b>option</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;<b>option</b> <i>value</i>="go"&gt;Go&lt;/<b>option</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/<b>select</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/<b>div</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/<b>div</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/<b>div</b>&gt;</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>&lt;<b>div</b> <i>class</i>="container"&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>&lt;<b>div</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>&lt;<b>h3</b>&gt;Source Code:&lt;/<b>h3</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>&lt;<b>textarea</b> <i>id</i>="sourceCode" <i>placeholder</i>="Enter your code here"&gt;&lt;/<b>textarea</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/<b>div</b>&gt;</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>&lt;<b>div</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>&lt;<b>h3</b>&gt;Result:&lt;/<b>h3</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>&lt;<b>textarea</b> <i>id</i>="resultCode" <i>readonly</i>&gt;&lt;/<b>textarea</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/<b>div</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/<b>div</b>&gt;</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>&lt;<b>div</b> <i>class</i>="button-container"&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>&lt;<b>button</b> <i>id</i>="migrateButton"&gt;Migrate Code&lt;/<b>button</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/<b>div</b>&gt;</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>&lt;<b>div</b> <i>class</i>="code-validator"&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>&lt;<b>h3</b>&gt;Code Validation:&lt;/<b>h3</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>&lt;<b>button</b> <i>id</i>="validateButton"&gt;Validate Syntax&lt;/<b>button</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>&lt;<b>div</b> <i>id</i>="validationResult" <i>style</i>="margin-top: 1rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;"&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>&lt;<b>p</b>&gt;Validation results will appear here.&lt;/<b>p</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/<b>div</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/<b>div</b>&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/<b>main</b>&gt;</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span><b>const</b> codeExamples = {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>java</i>: `public class HelloWorld {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>public static void main(String[] args) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>System.out.println("Hello, World!");</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s1">}`,</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>cpp</i>: `#include &lt;iostream&gt;</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1">int main() {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>std::cout &lt;&lt; "Hello, World!" &lt;&lt; std::endl;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>return 0;</span></p>
+<p class="p2"><span class="s1">}`,</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>cobol</i>: `IDENTIFICATION DIVISION.</span></p>
+<p class="p2"><span class="s1">PROGRAM-ID. HELLO.</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1">PROCEDURE DIVISION.</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>DISPLAY "Hello, World!".</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>STOP RUN.`,</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>pascal</i>: `program HelloWorld;</span></p>
+<p class="p2"><span class="s1">begin</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span>WriteLn('Hello, World!');</span></p>
+<p class="p2"><span class="s1">end.`,</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>go</i>: `package main</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1">import "fmt"</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1">func main() {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>fmt.Println("Hello, World!")</span></p>
+<p class="p2"><span class="s1">}`</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>};</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>// Migration functions</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span><b>function</b> <b><i>migrateCode</i></b>(sourceCode, sourceLanguage, targetLanguage) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>if</b> (sourceLanguage === targetLanguage) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>return</b> sourceCode; // No change needed</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>try</b> {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>// Process the code based on the language combination</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> migrationKey = `${sourceLanguage}_${targetLanguage}`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> migrationFn = migrationFunctions[migrationKey];</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (migrationFn) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span><b>return</b> <b><i>migrationFn</i></b>(sourceCode);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>} <b>else</b> {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span><b>return</b> `// Migration from ${sourceLanguage} to ${targetLanguage} not implemented yet`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>} <b>catch</b> (error) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>console.<b><i>error</i></b>("Migration error:", error);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>return</b> `// Error during migration: ${error.message}`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>// Extraction helpers</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span><b>function</b> <b><i>extractClassName</i></b>(code, language) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>let</b> match;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>if</b> (language === 'java') {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>match = code.<b><i>match</i></b>(/class\s+(\w+)/);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>} <b>else</b> <b>if</b> (language === 'cpp') {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>match = code.<b><i>match</i></b>(/class\s+(\w+)/);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>return</b> match ? match[1] : <b>null</b>;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span><b>function</b> <b><i>extractProgramId</i></b>(code) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>const</b> match = code.<b><i>match</i></b>(/PROGRAM-ID\s*\.\s*(\w+)/i);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>return</b> match ? match[1] : <b>null</b>;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span><b>function</b> <b><i>extractProgramName</i></b>(code) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>const</b> match = code.<b><i>match</i></b>(/program\s+(\w+)/i);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>return</b> match ? match[1] : <b>null</b>;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span><b>function</b> <b><i>extractPackageName</i></b>(code) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>const</b> match = code.<b><i>match</i></b>(/package\s+(\w+)/);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>return</b> match ? match[1] : <b>null</b>;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span><b>function</b> <b><i>capitalizeFirstLetter</i></b>(string) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>if</b> (!string) <b>return</b> '';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>return</b> string.<b><i>charAt</i></b>(0).<b><i>toUpperCase</i></b>() + string.<b><i>slice</i></b>(1);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>// Migration function implementations</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span><b>const</b> migrationFunctions = {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// Java to X</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>java_cpp</i>: <b>function</b>(code) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> className = <b><i>extractClassName</i></b>(code, 'java') || 'JavaProgram';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> result = '#include &lt;iostream&gt;\n#include &lt;string&gt;\n\nusing namespace std;\n\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>// Convert class to C++ class</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += `class ${className} {\npublic:\n`;</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>// Find main method</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (code.<b><i>includes</i></b>('public static void main')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += '<span class="Apple-converted-space">    </span>void run() {\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>// Convert System.out.println to cout</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span><b>const</b> printRegex = /System\.out\.println\("([^"]*)"\);/g;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span><b>let</b> printMatch;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span><b>while</b> ((printMatch = printRegex.<b><i>exec</i></b>(code)) !== <b>null</b>) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span>result += `<span class="Apple-converted-space">        </span>cout &lt;&lt; "${printMatch[1]}" &lt;&lt; endl;\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += '<span class="Apple-converted-space">    </span>}\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '};\n\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>// Add main function</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'int main() {\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += `<span class="Apple-converted-space">    </span>${className} program;\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '<span class="Apple-converted-space">    </span>program.run();\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '<span class="Apple-converted-space">    </span>return 0;\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '}\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>return</b> result;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>},</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>java_cobol</i>: <b>function</b>(code) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> className = <b><i>extractClassName</i></b>(code, 'java') || 'JAVAPROGRAM';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> result = 'IDENTIFICATION DIVISION.\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += `PROGRAM-ID. ${className.toUpperCase()}.\n\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'DATA DIVISION.\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'WORKING-STORAGE SECTION.\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '01 GREETING PIC X(50) VALUE "Hello from COBOL".\n\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'PROCEDURE DIVISION.\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'MAIN-PARAGRAPH.\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>// Convert System.out.println to DISPLAY</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> printRegex = /System\.out\.println\("([^"]*)"\);/g;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> printMatch;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>while</b> ((printMatch = printRegex.<b><i>exec</i></b>(code)) !== <b>null</b>) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += `<span class="Apple-converted-space">    </span>DISPLAY "${printMatch[1]}".\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (!code.<b><i>includes</i></b>('System.out.println')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += '<span class="Apple-converted-space">    </span>DISPLAY GREETING.\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '<span class="Apple-converted-space">    </span>STOP RUN.\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>return</b> result;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>},</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>java_pascal</i>: <b>function</b>(code) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> className = <b><i>extractClassName</i></b>(code, 'java') || 'JavaProgram';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> result = `program ${className};\n\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'uses\n<span class="Apple-converted-space">  </span>SysUtils;\n\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'begin\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>// Convert System.out.println to WriteLn</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> printRegex = /System\.out\.println\("([^"]*)"\);/g;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> printMatch;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>while</b> ((printMatch = printRegex.<b><i>exec</i></b>(code)) !== <b>null</b>) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += `<span class="Apple-converted-space">  </span>WriteLn('${printMatch[1]}');\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (!code.<b><i>includes</i></b>('System.out.println')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += '<span class="Apple-converted-space">  </span>WriteLn(\'Hello from Pascal\');\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'end.\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>return</b> result;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>},</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>java_go</i>: <b>function</b>(code) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> className = <b><i>extractClassName</i></b>(code, 'java') || 'javaprogram';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> result = 'package main\n\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'import (\n\t"fmt"\n)\n\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'func main() {\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>// Convert System.out.println to fmt.Println</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> printRegex = /System\.out\.println\("([^"]*)"\);/g;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> printMatch;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>while</b> ((printMatch = printRegex.<b><i>exec</i></b>(code)) !== <b>null</b>) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += `\tfmt.Println("${printMatch[1]}")\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (!code.<b><i>includes</i></b>('System.out.println')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += '\tfmt.Println("Hello from Go")\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '}\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>return</b> result;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>},</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// C++ to X</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>cpp_java</i>: <b>function</b>(code) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> className = <b><i>extractClassName</i></b>(code, 'cpp') || 'CppProgram';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> result = `public class ${className} {\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '<span class="Apple-converted-space">    </span>public static void main(String[] args) {\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>// Convert cout to System.out.println</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> coutRegex = /cout\s*&lt;&lt;\s*"([^"]*)".*;/g;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> coutMatch;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>while</b> ((coutMatch = coutRegex.<b><i>exec</i></b>(code)) !== <b>null</b>) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += `<span class="Apple-converted-space">        </span>System.out.println("${coutMatch[1]}");\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (!code.<b><i>includes</i></b>('cout &lt;&lt;')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += '<span class="Apple-converted-space">        </span>System.out.println("Hello from Java");\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '<span class="Apple-converted-space">    </span>}\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '}\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>return</b> result;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>},</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>cpp_cobol</i>: <b>function</b>(code) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> className = <b><i>extractClassName</i></b>(code, 'cpp') || 'CPPPROGRAM';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> result = 'IDENTIFICATION DIVISION.\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += `PROGRAM-ID. ${className.toUpperCase()}.\n\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'DATA DIVISION.\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'WORKING-STORAGE SECTION.\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '01 GREETING PIC X(50) VALUE "Hello from COBOL".\n\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'PROCEDURE DIVISION.\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'MAIN-PARAGRAPH.\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>// Convert cout to DISPLAY</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> coutRegex = /cout\s*&lt;&lt;\s*"([^"]*)".*;/g;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> coutMatch;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>while</b> ((coutMatch = coutRegex.<b><i>exec</i></b>(code)) !== <b>null</b>) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += `<span class="Apple-converted-space">    </span>DISPLAY "${coutMatch[1]}".\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (!code.<b><i>includes</i></b>('cout &lt;&lt;')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += '<span class="Apple-converted-space">    </span>DISPLAY GREETING.\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '<span class="Apple-converted-space">    </span>STOP RUN.\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>return</b> result;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>},</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>cpp_pascal</i>: <b>function</b>(code) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> className = <b><i>extractClassName</i></b>(code, 'cpp') || 'CppProgram';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> result = `program ${className};\n\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'uses\n<span class="Apple-converted-space">  </span>SysUtils;\n\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'begin\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>// Convert cout to WriteLn</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> coutRegex = /cout\s*&lt;&lt;\s*"([^"]*)".*;/g;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> coutMatch;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>while</b> ((coutMatch = coutRegex.<b><i>exec</i></b>(code)) !== <b>null</b>) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += `<span class="Apple-converted-space">  </span>WriteLn('${coutMatch[1]}');\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (!code.<b><i>includes</i></b>('cout &lt;&lt;')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += '<span class="Apple-converted-space">  </span>WriteLn(\'Hello from Pascal\');\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'end.\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>return</b> result;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>},</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>cpp_go</i>: <b>function</b>(code) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> className = <b><i>extractClassName</i></b>(code, 'cpp') || 'main';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> result = 'package main\n\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'import (\n\t"fmt"\n)\n\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'func main() {\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>// Convert cout to fmt.Println</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> coutRegex = /cout\s*&lt;&lt;\s*"([^"]*)".*;/g;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> coutMatch;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>while</b> ((coutMatch = coutRegex.<b><i>exec</i></b>(code)) !== <b>null</b>) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += `\tfmt.Println("${coutMatch[1]}")\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (!code.<b><i>includes</i></b>('cout &lt;&lt;')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += '\tfmt.Println("Hello from Go")\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '}\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>return</b> result;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>},</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// COBOL to X conversions</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>cobol_java</i>: <b>function</b>(code) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> programId = <b><i>extractProgramId</i></b>(code) || 'CobolProgram';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> result = `public class ${programId} {\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '<span class="Apple-converted-space">    </span>public static void main(String[] args) {\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>// Convert DISPLAY to System.out.println</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> displayRegex = /DISPLAY\s*"([^"]*)"\./gi;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> displayMatch;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>while</b> ((displayMatch = displayRegex.<b><i>exec</i></b>(code)) !== <b>null</b>) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += `<span class="Apple-converted-space">        </span>System.out.println("${displayMatch[1]}");\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (!code.<b><i>includes</i></b>('DISPLAY')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += '<span class="Apple-converted-space">        </span>System.out.println("Hello from Java");\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '<span class="Apple-converted-space">    </span>}\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '}\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>return</b> result;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>},</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>cobol_cpp</i>: <b>function</b>(code) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> programId = <b><i>extractProgramId</i></b>(code) || 'CobolProgram';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> result = '#include &lt;iostream&gt;\n#include &lt;string&gt;\n\nusing namespace std;\n\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'int main() {\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>// Convert DISPLAY to cout</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> displayRegex = /DISPLAY\s*"([^"]*)"\./gi;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> displayMatch;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>while</b> ((displayMatch = displayRegex.<b><i>exec</i></b>(code)) !== <b>null</b>) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += `<span class="Apple-converted-space">    </span>cout &lt;&lt; "${displayMatch[1]}" &lt;&lt; endl;\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (!code.<b><i>includes</i></b>('DISPLAY')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += '<span class="Apple-converted-space">    </span>cout &lt;&lt; "Hello from C++" &lt;&lt; endl;\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '<span class="Apple-converted-space">    </span>return 0;\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '}\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>return</b> result;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>},</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>cobol_pascal</i>: <b>function</b>(code) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> programId = <b><i>extractProgramId</i></b>(code) || 'CobolProgram';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> result = `program ${programId};\n\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'uses\n<span class="Apple-converted-space">  </span>SysUtils;\n\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'begin\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>// Convert DISPLAY to WriteLn</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> displayRegex = /DISPLAY\s*"([^"]*)"\./gi;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> displayMatch;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>while</b> ((displayMatch = displayRegex.<b><i>exec</i></b>(code)) !== <b>null</b>) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += `<span class="Apple-converted-space">  </span>WriteLn('${displayMatch[1]}');\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (!code.<b><i>includes</i></b>('DISPLAY')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += '<span class="Apple-converted-space">  </span>WriteLn(\'Hello from Pascal\');\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'end.\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>return</b> result;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>},</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>cobol_go</i>: <b>function</b>(code) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> programId = <b><i>extractProgramId</i></b>(code) || 'main';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> result = 'package main\n\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'import (\n\t"fmt"\n)\n\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'func main() {\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>// Convert DISPLAY to fmt.Println</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> displayRegex = /DISPLAY\s*"([^"]*)"\./gi;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> displayMatch;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>while</b> ((displayMatch = displayRegex.<b><i>exec</i></b>(code)) !== <b>null</b>) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += `\tfmt.Println("${displayMatch[1]}")\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (!code.<b><i>includes</i></b>('DISPLAY')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += '\tfmt.Println("Hello from Go")\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '}\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>return</b> result;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>},</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// Pascal to X conversions</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>pascal_java</i>: <b>function</b>(code) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> programName = <b><i>extractProgramName</i></b>(code) || 'PascalProgram';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> result = `public class ${programName} {\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '<span class="Apple-converted-space">    </span>public static void main(String[] args) {\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>// Convert WriteLn to System.out.println</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> writelnRegex = /WriteLn\('([^']*)'\);/gi;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> writelnMatch;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>while</b> ((writelnMatch = writelnRegex.<b><i>exec</i></b>(code)) !== <b>null</b>) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += `<span class="Apple-converted-space">        </span>System.out.println("${writelnMatch[1]}");\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (!code.<b><i>includes</i></b>('WriteLn')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += '<span class="Apple-converted-space">        </span>System.out.println("Hello from Java");\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '<span class="Apple-converted-space">    </span>}\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '}\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>return</b> result;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>},</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>pascal_cpp</i>: <b>function</b>(code) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> programName = <b><i>extractProgramName</i></b>(code) || 'PascalProgram';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> result = '#include &lt;iostream&gt;\n#include &lt;string&gt;\n\nusing namespace std;\n\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'int main() {\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>// Convert WriteLn to cout</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> writelnRegex = /WriteLn\('([^']*)'\);/gi;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> writelnMatch;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>while</b> ((writelnMatch = writelnRegex.<b><i>exec</i></b>(code)) !== <b>null</b>) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += `<span class="Apple-converted-space">    </span>cout &lt;&lt; "${writelnMatch[1]}" &lt;&lt; endl;\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (!code.<b><i>includes</i></b>('WriteLn')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += '<span class="Apple-converted-space">    </span>cout &lt;&lt; "Hello from C++" &lt;&lt; endl;\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '<span class="Apple-converted-space">    </span>return 0;\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '}\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>return</b> result;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>},</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>pascal_cobol</i>: <b>function</b>(code) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> programName = <b><i>extractProgramName</i></b>(code) || 'PASCALPROG';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> result = 'IDENTIFICATION DIVISION.\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += `PROGRAM-ID. ${programName.toUpperCase()}.\n\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'PROCEDURE DIVISION.\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'MAIN-PARAGRAPH.\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>// Convert WriteLn to DISPLAY</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> writelnRegex = /WriteLn\('([^']*)'\);/gi;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> writelnMatch;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>while</b> ((writelnMatch = writelnRegex.<b><i>exec</i></b>(code)) !== <b>null</b>) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += `<span class="Apple-converted-space">    </span>DISPLAY "${writelnMatch[1]}".\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (!code.<b><i>includes</i></b>('WriteLn')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += '<span class="Apple-converted-space">    </span>DISPLAY "Hello from COBOL".\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '<span class="Apple-converted-space">    </span>STOP RUN.\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>return</b> result;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>},</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>pascal_go</i>: <b>function</b>(code) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> programName = <b><i>extractProgramName</i></b>(code) || 'main';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> result = 'package main\n\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'import (\n\t"fmt"\n)\n\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'func main() {\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>// Convert WriteLn to fmt.Println</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> writelnRegex = /WriteLn\('([^']*)'\);/gi;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> writelnMatch;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>while</b> ((writelnMatch = writelnRegex.<b><i>exec</i></b>(code)) !== <b>null</b>) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += `\tfmt.Println("${writelnMatch[1]}")\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (!code.<b><i>includes</i></b>('WriteLn')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += '\tfmt.Println("Hello from Go")\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '}\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>return</b> result;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>},</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// Go to X conversions</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>go_java</i>: <b>function</b>(code) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> packageName = <b><i>extractPackageName</i></b>(code) || 'GoProgram';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> result = `public class ${capitalizeFirstLetter(packageName)} {\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '<span class="Apple-converted-space">    </span>public static void main(String[] args) {\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>// Convert fmt.Println to System.out.println</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> printlnRegex = /fmt\.Println\("([^"]*)"\)/g;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> printlnMatch;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>while</b> ((printlnMatch = printlnRegex.<b><i>exec</i></b>(code)) !== <b>null</b>) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += `<span class="Apple-converted-space">        </span>System.out.println("${printlnMatch[1]}");\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (!code.<b><i>includes</i></b>('fmt.Println')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += '<span class="Apple-converted-space">        </span>System.out.println("Hello from Java");\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '<span class="Apple-converted-space">    </span>}\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '}\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>return</b> result;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>},</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>go_cpp</i>: <b>function</b>(code) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> packageName = <b><i>extractPackageName</i></b>(code) || 'GoProgram';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> result = '#include &lt;iostream&gt;\n#include &lt;string&gt;\n\nusing namespace std;\n\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'int main() {\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>// Convert fmt.Println to cout</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> printlnRegex = /fmt\.Println\("([^"]*)"\)/g;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> printlnMatch;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>while</b> ((printlnMatch = printlnRegex.<b><i>exec</i></b>(code)) !== <b>null</b>) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += `<span class="Apple-converted-space">    </span>cout &lt;&lt; "${printlnMatch[1]}" &lt;&lt; endl;\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (!code.<b><i>includes</i></b>('fmt.Println')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += '<span class="Apple-converted-space">    </span>cout &lt;&lt; "Hello from C++" &lt;&lt; endl;\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '<span class="Apple-converted-space">    </span>return 0;\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '}\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>return</b> result;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>},</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>go_cobol</i>: <b>function</b>(code) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> packageName = <b><i>extractPackageName</i></b>(code) || 'GOPROGRAM';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> result = 'IDENTIFICATION DIVISION.\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += `PROGRAM-ID. ${packageName.toUpperCase()}.\n\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'PROCEDURE DIVISION.\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'MAIN-PARAGRAPH.\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>// Convert fmt.Println to DISPLAY</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> printlnRegex = /fmt\.Println\("([^"]*)"\)/g;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> printlnMatch;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>while</b> ((printlnMatch = printlnRegex.<b><i>exec</i></b>(code)) !== <b>null</b>) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += `<span class="Apple-converted-space">    </span>DISPLAY "${printlnMatch[1]}".\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (!code.<b><i>includes</i></b>('fmt.Println')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += '<span class="Apple-converted-space">    </span>DISPLAY "Hello from COBOL".\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += '<span class="Apple-converted-space">    </span>STOP RUN.\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>return</b> result;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>},</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><i>go_pascal</i>: <b>function</b>(code) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> packageName = <b><i>extractPackageName</i></b>(code) || 'GoProgram';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> result = `program ${packageName};\n\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'uses\n<span class="Apple-converted-space">  </span>SysUtils;\n\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'begin\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>// Convert fmt.Println to WriteLn</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> printlnRegex = /fmt\.Println\("([^"]*)"\)/g;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>let</b> printlnMatch;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>while</b> ((printlnMatch = printlnRegex.<b><i>exec</i></b>(code)) !== <b>null</b>) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += `<span class="Apple-converted-space">  </span>WriteLn('${printlnMatch[1]}');\n`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (!code.<b><i>includes</i></b>('fmt.Println')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result += '<span class="Apple-converted-space">  </span>WriteLn(\'Hello from Pascal\');\n';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result += 'end.\n';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>return</b> result;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>};</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>// Validation functions</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span><b>function</b> <b><i>validateCode</i></b>(code, language) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>const</b> result = {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><i>isValid</i>: <b>true</b>,</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><i>errors</i>: [],</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><i>warnings</i>: []</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>if</b> (!code || !code.<b><i>trim</i></b>()) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result.isValid = <b>false</b>;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result.errors.<b><i>push</i></b>('Code cannot be empty');</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>return</b> result;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// Basic language-specific syntax validation</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>switch</b> (language) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>case</b> 'java': <b><i>validateJavaSyntax</i></b>(code, result); <b>break</b>;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>case</b> 'cpp': <b><i>validateCppSyntax</i></b>(code, result); <b>break</b>;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>case</b> 'cobol': <b><i>validateCobolSyntax</i></b>(code, result); <b>break</b>;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>case</b> 'pascal': <b><i>validatePascalSyntax</i></b>(code, result); <b>break</b>;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>case</b> 'go': <b><i>validateGoSyntax</i></b>(code, result); <b>break</b>;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><i>default</i>: result.warnings.<b><i>push</i></b>(`No specific validation available for ${language}`);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// Add a note about the validation being limited</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>result.warnings.<b><i>push</i></b>('Note: This is a basic syntax check. For complete validation, please use a dedicated compiler or linter.');</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>return</b> result;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span><b>function</b> <b><i>validateJavaSyntax</i></b>(code, result) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// Check for unbalanced braces</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>const</b> openBraces = (code.<b><i>match</i></b>(/\{/g) || []).length;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>const</b> closeBraces = (code.<b><i>match</i></b>(/\}/g) || []).length;</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>if</b> (openBraces !== closeBraces) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result.isValid = <b>false</b>;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result.errors.<b><i>push</i></b>(`Unbalanced braces: ${openBraces} opening and ${closeBraces} closing braces`);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// Check for class declaration</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>if</b> (!code.<b><i>includes</i></b>('class ')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result.warnings.<b><i>push</i></b>('No class declaration found');</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// Check for missing semicolons (simple heuristic)</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>const</b> lines = code.<b><i>split</i></b>('\n');</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>for</b> (<b>let</b> i = 0; i &lt; lines.length; i++) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> line = lines[i].<b><i>trim</i></b>();</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (line &amp;&amp; !line.<b><i>endsWith</i></b>('{') &amp;&amp; !line.<b><i>endsWith</i></b>('}') &amp;&amp;<span class="Apple-converted-space"> </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>!line.<b><i>endsWith</i></b>(';') &amp;&amp; !line.<b><i>startsWith</i></b>('//') &amp;&amp;<span class="Apple-converted-space"> </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>!line.<b><i>startsWith</i></b>('/*') &amp;&amp; !line.<b><i>startsWith</i></b>('*') &amp;&amp;<span class="Apple-converted-space"> </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>!line.<b><i>endsWith</i></b>('*/') &amp;&amp; !line.<b><i>startsWith</i></b>('import') &amp;&amp;<span class="Apple-converted-space"> </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>!line.<b><i>startsWith</i></b>('package') &amp;&amp; !line.<b><i>startsWith</i></b>('public class')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result.warnings.<b><i>push</i></b>(`Line ${i+1} may be missing a semicolon: "${line}"`);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span><b>function</b> <b><i>validateCppSyntax</i></b>(code, result) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// Check for unbalanced braces</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>const</b> openBraces = (code.<b><i>match</i></b>(/\{/g) || []).length;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>const</b> closeBraces = (code.<b><i>match</i></b>(/\}/g) || []).length;</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>if</b> (openBraces !== closeBraces) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result.isValid = <b>false</b>;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result.errors.<b><i>push</i></b>(`Unbalanced braces: ${openBraces} opening and ${closeBraces} closing braces`);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// Check for includes</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>if</b> (!code.<b><i>includes</i></b>('#include')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result.warnings.<b><i>push</i></b>('No include statements found');</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// Check for main function</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>if</b> (!code.<b><i>includes</i></b>('main')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result.warnings.<b><i>push</i></b>('No main function found');</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span><b>function</b> <b><i>validateCobolSyntax</i></b>(code, result) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// Check for required divisions</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>if</b> (!code.<b><i>includes</i></b>('IDENTIFICATION DIVISION')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result.isValid = <b>false</b>;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result.errors.<b><i>push</i></b>('Missing IDENTIFICATION DIVISION');</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>if</b> (!code.<b><i>includes</i></b>('PROCEDURE DIVISION')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result.isValid = <b>false</b>;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result.errors.<b><i>push</i></b>('Missing PROCEDURE DIVISION');</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// Check for PROGRAM-ID</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>if</b> (!code.<b><i>includes</i></b>('PROGRAM-ID')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result.warnings.<b><i>push</i></b>('No PROGRAM-ID found');</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// Check for proper line termination (periods)</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>const</b> lines = code.<b><i>split</i></b>('\n');</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>for</b> (<b>let</b> i = 0; i &lt; lines.length; i++) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> line = lines[i].<b><i>trim</i></b>();</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (line &amp;&amp; !line.<b><i>endsWith</i></b>('.') &amp;&amp;<span class="Apple-converted-space"> </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>!line.<b><i>includes</i></b>('DIVISION') &amp;&amp;<span class="Apple-converted-space"> </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>!line.<b><i>includes</i></b>('SECTION') &amp;&amp;<span class="Apple-converted-space"> </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>line.length &gt; 0) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>result.warnings.<b><i>push</i></b>(`Line ${i+1} may be missing a period: "${line}"`);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span><b>function</b> <b><i>validatePascalSyntax</i></b>(code, result) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// Check for proper program structure</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>if</b> (!code.<b><i>toLowerCase</i></b>().<b><i>includes</i></b>('program ')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result.warnings.<b><i>push</i></b>('No program declaration found');</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// Check for begin/end balance</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>const</b> beginCount = (code.<b><i>toLowerCase</i></b>().<b><i>match</i></b>(/\bbegin\b/g) || []).length;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>const</b> endCount = (code.<b><i>toLowerCase</i></b>().<b><i>match</i></b>(/\bend\b/g) || []).length;</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>if</b> (beginCount !== endCount) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result.isValid = <b>false</b>;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result.errors.<b><i>push</i></b>(`Unbalanced begin/end: ${beginCount} begin and ${endCount} end keywords`);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// Check for proper termination</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>if</b> (!code.<b><i>trim</i></b>().<b><i>endsWith</i></b>('.')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result.warnings.<b><i>push</i></b>('Program should end with a period');</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span><b>function</b> <b><i>validateGoSyntax</i></b>(code, result) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// Check for package declaration</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>if</b> (!code.<b><i>includes</i></b>('package ')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result.isValid = <b>false</b>;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result.errors.<b><i>push</i></b>('Missing package declaration');</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// Check for main function in package main</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>if</b> (code.<b><i>includes</i></b>('package main') &amp;&amp; !code.<b><i>includes</i></b>('func main()')) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>result.warnings.<b><i>push</i></b>('Package main should have a main function');</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>// Set up UI interactions</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>document.<b><i>addEventListener</i></b>('DOMContentLoaded', <b>function</b>() {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>const</b> sourceLanguageSelect = document.<b><i>getElementById</i></b>('sourceLanguage');</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>const</b> targetLanguageSelect = document.<b><i>getElementById</i></b>('targetLanguage');</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>const</b> sourceCodeTextarea = document.<b><i>getElementById</i></b>('sourceCode');</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>const</b> resultCodeTextarea = document.<b><i>getElementById</i></b>('resultCode');</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>const</b> migrateButton = document.<b><i>getElementById</i></b>('migrateButton');</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>const</b> validateButton = document.<b><i>getElementById</i></b>('validateButton');</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span><b>const</b> validationResult = document.<b><i>getElementById</i></b>('validationResult');</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// Set default example code based on selected source language</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>sourceLanguageSelect.<b><i>addEventListener</i></b>('change', () =&gt; {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> language = sourceLanguageSelect.value;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>sourceCodeTextarea.value = codeExamples[language] || '';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// Initialize with default example</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>sourceCodeTextarea.value = codeExamples[sourceLanguageSelect.value] || '';</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// Handle migration button click</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>migrateButton.<b><i>addEventListener</i></b>('click', () =&gt; {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> sourceLanguage = sourceLanguageSelect.value;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> targetLanguage = targetLanguageSelect.value;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> sourceCode = sourceCodeTextarea.value;</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (!sourceCode.<b><i>trim</i></b>()) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span><b><i>alert</i></b>('Please enter source code');</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span><b>return</b>;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>try</b> {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span><b>const</b> result = <b><i>migrateCode</i></b>(sourceCode, sourceLanguage, targetLanguage);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>resultCodeTextarea.value = result;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>} <b>catch</b> (error) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>console.<b><i>error</i></b>('Migration error:', error);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>resultCodeTextarea.value = `// Error during migration: ${error.message}`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>// Handle validate button click</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>validateButton.<b><i>addEventListener</i></b>('click', () =&gt; {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> targetLanguage = targetLanguageSelect.value;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>const</b> codeToValidate = resultCodeTextarea.value;</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>if</b> (!codeToValidate.<b><i>trim</i></b>()) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span><b><i>alert</i></b>('Please migrate code first');</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span><b>return</b>;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span><b>try</b> {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span><b>const</b> validationResults = <b><i>validateCode</i></b>(codeToValidate, targetLanguage);</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span><b>if</b> (validationResults.isValid) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span>validationResult.className = 'validation-success';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span>validationResult.innerHTML = `&lt;p&gt;✓ Code is syntactically valid&lt;/p&gt;`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span><b>if</b> (validationResults.warnings.length &gt; 0) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                            </span>validationResult.innerHTML += `&lt;p&gt;&lt;strong&gt;Warnings:&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;${validationResults.warnings.map(w =&gt; `&lt;li&gt;${w}&lt;/li&gt;`).join('')}&lt;/ul&gt;`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>} <b>else</b> {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span>validationResult.className = 'validation-error';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span>validationResult.innerHTML = `&lt;p&gt;✗ Syntax errors detected&lt;/p&gt;&lt;ul&gt;${validationResults.errors.map(e =&gt; `&lt;li&gt;${e}&lt;/li&gt;`).join('')}&lt;/ul&gt;`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>} <b>catch</b> (error) {</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>console.<b><i>error</i></b>('Validation error:', error);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>validationResult.className = 'validation-error';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span>validationResult.innerHTML = `&lt;p&gt;Error during validation: ${error.message}&lt;/p&gt;`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>});</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/<b>script</b>&gt;</span></p>
+<p class="p3"><span class="s2">&lt;/<b>body</b>&gt;</span></p>
+<p class="p3"><span class="s2">&lt;/<b>html</b>&gt;</span></p>
+</body>
+</html>

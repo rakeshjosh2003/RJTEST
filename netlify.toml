@@ -9,5 +9,5 @@
 # Redirects for SPA (Single Page Application)
 [[redirects]]
   from = "/*"
-  to = "/web-version/index.html"
+  to = "/web-version/simple-migrator.html"
   status = 200
