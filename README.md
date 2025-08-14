@@ -53,7 +53,7 @@ To share the application with others on your local network:
    http://YOUR_IP_ADDRESS:3000/
    ```
 
-3. For public sharing, consider deploying to a hosting service like:
+3. For public sharing, consider deploying to a hosting service like change made:
    - Netlify
    - Vercel
    - GitHub Pages
